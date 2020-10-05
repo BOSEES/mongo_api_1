@@ -1,6 +1,13 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
 const port = 8080;
+
+app.use(express.urlencoded({extended : false}));
+mongoose.connect("mongodb+srv://root:1234@cluster0.ojsbm.mongodb.net/mydb?retryWrites=true&w=majority",
+  { useNewUrlParser: true, 
+    useUnifiedTopology: true 
+  });
 
 app.get("/", function(req, res){
   console.log(req);
