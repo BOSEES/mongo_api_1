@@ -1,16 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
+const mongo_url = process.env.MONGO_URL;
 
 app.use(express.urlencoded({extended : false}));
-mongoose.connect("mongodb+srv://root:1234@cluster0.ojsbm.mongodb.net/mydb?retryWrites=true&w=majority",
+mongoose.connect(mongo_url,
   { useNewUrlParser: true, 
     useUnifiedTopology: true 
   });
 
 app.get("/", function(req, res){
-  console.log(req);
   res.send("hellow world");
 });
 
