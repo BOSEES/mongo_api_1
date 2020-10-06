@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/contactModel"); 
+const List = require("../models/listModel");
 
 router.get("/", function(req, res) {
   // res.send("hello seocho!!!");
@@ -54,6 +55,39 @@ router.post("/login", function(req, res, next) {
     }
   })
 });
+
+router.get("/list", function(req, res, next){
+  res.render("inputList");
+})
+
+router.post("/list", (req, res, next) => {
+  const list = new List();
+
+  list.title = req.body.title;
+  list.contents = req.body.contents;
+  list.author = req.body.author;
+
+  list.save(function(error){
+    if (error) {
+      console.log(res.json(error));
+    } else {
+      res.json({
+        message : "New Contact createe",
+        data : list
+      });
+    }
+  })
+})
+
+router.get("/contents", function(req, res , next){
+  List.find(function(err, data){
+    if (err) {
+      next(err);
+    } else {
+      return res.json(data);
+    }
+  })
+})
 
 
 module.exports = router;
